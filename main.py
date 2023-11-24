@@ -50,5 +50,27 @@ for exercise in result["exercises"]:
         }
     }
 
-    sheet_response = requests.post(url=f"{sheet_endpoint}/{SHEET_API_KEY}/workoutTracking/workouts", json=sheet_params)
+    # No Authentication
+    # sheet_response = requests.post(
+    #     url=f"{sheet_endpoint}/{SHEET_API_KEY}/workoutTracking/workouts",
+    #     json=sheet_params
+    #     )
+
+    # Basic Authentication
+    # sheet_response = requests.post(
+    #     url=f"{sheet_endpoint}/{SHEET_API_KEY}/workoutTracking/workouts",
+    #     json=sheet_params,
+    #     auth=(YOUR USERNAME,YOUR PASSWORD)
+    # )
+
+    # Bearer Token Authentication
+    bearer_headers = {
+        "Authorization": f"Bearer {os.getenv('BEARER_TOKEN')}"
+    }
+
+    sheet_response = requests.post(
+        url=f"{sheet_endpoint}/{SHEET_API_KEY}/workoutTracking/workouts",
+        json=sheet_params,
+        headers=bearer_headers,
+    )
     print(sheet_response.text)
